@@ -18,7 +18,6 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   }
 }
 
-
 resource testDatabase 'Microsoft.Sql/servers/databases@2022-05-01-preview' = [for dbName in sqlServerDatabaseNames: {
   name: dbName
   parent: sqlServer
@@ -32,3 +31,5 @@ resource testDatabase 'Microsoft.Sql/servers/databases@2022-05-01-preview' = [fo
     sourceDatabaseId: sqlServer.id
   }
 }]
+
+output sqlServerId string = sqlServer.id
