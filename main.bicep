@@ -39,7 +39,7 @@ module sqlServerSecondary 'modules/sqlserver.bicep' = {
 resource sqlServerFailoverGroup 'Microsoft.Sql/servers/failoverGroups@2022-02-01-preview' = {
   name: '${sqlServerPrimaryName}/${sqlServerFailoverGroupName}'
   properties: {
-    databases: sqlServerDatabaseNames
+    databases: [for dbName in sqlServerDatabaseNames: resourceId('Microsoft.Sql/servers/databases', sqlServerPrimaryName, dbName)]
     readWriteEndpoint: {
       failoverPolicy: 'Automatic'
       failoverWithDataLossGracePeriodMinutes: 60
